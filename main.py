@@ -12,20 +12,47 @@ def home():
     if request.method == "POST":
         keyword = request.form.get("keyword", "").strip()
 
-        # Demo data (baad me real CPPP data se replace karenge)
-        if keyword:
-            results = [
-                {
-                    "title": f"Tender for {keyword}",
+    if keyword:
+    url = f"https://etenders.gov.in/eprocure/app?page=FrontEndAdvancedSearch&searchType=active&tenderTitle={keyword}"
+
+    try:
+        response = requests.get(
+            url,
+            headers={
+                "User-Agent": "Mozilla/5.0"
+            },
+            timeout=20
+        )
+
+        soup = BeautifulSoup(response.text, "html.parser")
+
+        results = []
+
+        rows = soup.find_all("tr")
+
+        for row in rows[:10]:
+            text = row.get_text(" ", strip=True)
+
+            if keyword.lower() in text.lower():
+                results.append({
+                    "title": text[:100],
                     "department": "CPPP",
-                    "winner": "Demo Company Ltd"
-                },
-                {
-                    "title": f"Supply of {keyword}",
-                    "department": "Railways",
-                    "winner": "ABC Industries"
-                }
-            ]
+                    "winner": "Available on portal"
+                })
+
+        if not results:
+            results.append({
+                "title": "No matching tenders found",
+                "department": "-",
+                "winner": "-"
+            })
+
+    except Exception as e:
+        results.append({
+            "title": "Error",
+            "department": "System",
+            "winner": str(e)
+        })
 
     return render_template(
         "index.html",
