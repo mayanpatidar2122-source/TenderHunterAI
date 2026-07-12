@@ -12,46 +12,44 @@ def home():
     if request.method == "POST":
         keyword = request.form.get("keyword", "").strip()
 
-    if keyword:
-        url = f"https://etenders.gov.in/eprocure/app?page=FrontEndAdvancedSearch&searchType=active&tenderTitle={keyword}"
-        try:
-        response = requests.get(
-            url,
-            headers={
-                "User-Agent": "Mozilla/5.0"
-            },
-            timeout=20
-        )
+        if keyword:
+            url = f"https://etenders.gov.in/eprocure/app?page=FrontEndAdvancedSearch&searchType=active&tenderTitle={keyword}"
 
-        soup = BeautifulSoup(response.text, "html.parser")
+            try:
+                response = requests.get(
+                    url,
+                    headers={
+                        "User-Agent": "Mozilla/5.0"
+                    },
+                    timeout=20
+                )
 
-        results = []
+                soup = BeautifulSoup(response.text, "html.parser")
+                rows = soup.find_all("tr")
 
-        rows = soup.find_all("tr")
+                for row in rows:
+                    text = row.get_text(" ", strip=True)
 
-        for row in rows[:10]:
-            text = row.get_text(" ", strip=True)
+                    if keyword.lower() in text.lower():
+                        results.append({
+                            "title": text[:100],
+                            "department": "CPPP",
+                            "winner": "Available on Portal"
+                        })
 
-            if keyword.lower() in text.lower():
+                if not results:
+                    results.append({
+                        "title": "No matching tenders found",
+                        "department": "-",
+                        "winner": "-"
+                    })
+
+            except Exception as e:
                 results.append({
-                    "title": text[:100],
-                    "department": "CPPP",
-                    "winner": "Available on portal"
+                    "title": "Error",
+                    "department": "System",
+                    "winner": str(e)
                 })
-
-        if not results:
-            results.append({
-                "title": "No matching tenders found",
-                "department": "-",
-                "winner": "-"
-            })
-
-    except Exception as e:
-        results.append({
-            "title": "Error",
-            "department": "System",
-            "winner": str(e)
-        })
 
     return render_template(
         "index.html",
