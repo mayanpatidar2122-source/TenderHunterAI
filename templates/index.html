@@ -10,8 +10,8 @@
 <h1>🚀 Tender Hunter AI</h1>
 <p>Find Government Tenders & Winners</p>
 
-<form>
-  <input type="text" placeholder="Search company or keyword"
+<form method="POST">
+<input type="text" name="keyword" placeholder="Search company or keyword" value="{{ keyword }}" style="width:300px;padding:10px;">
          style="width:300px;padding:10px;">
   <button type="submit">🔍 Search</button>
 </form>
