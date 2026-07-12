@@ -1,20 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tender Hunter AI</title>
 </head>
-<body style="font-family:Arial;background:#f5f5f5;text-align:center;padding:30px;">
+<body style="font-family:Arial;background:#f4f4f4;text-align:center;">
 
 <h1>🚀 Tender Hunter AI</h1>
 <p>Find Government Tenders & Winners</p>
 
 <form method="POST">
-    <input type="text"
-           name="keyword"
+    <input type="text" name="keyword" placeholder="Enter keyword" value="{{ keyword }}">
+    <button type="submit">🔍 Search</button>
+</form>
 
+{% if results %}
+<hr>
+<h2>Search Results</h2>
+
+{% for item in results %}
+<div style="background:white;padding:15px;margin:15px;border-radius:10px;">
+    <b>{{ item.title }}</b><br><br>
+    Department: {{ item.department }}<br>
+    Winner: {{ item.winner }}
 </div>
+{% endfor %}
+
+{% endif %}
 
 </body>
 </html>
