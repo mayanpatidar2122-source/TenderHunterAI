@@ -13,11 +13,8 @@ def home():
         keyword = request.form.get("keyword", "").strip()
 
     if keyword:
-    url = f"https://etenders.gov.in/eprocure/app?page=FrontEndAdvancedSearch&searchType=active&tenderTitle={keyword}"
-
-    try:
-
-    try:
+        url = f"https://etenders.gov.in/eprocure/app?page=FrontEndAdvancedSearch&searchType=active&tenderTitle={keyword}"
+        try
         response = requests.get(
             url,
             headers={
