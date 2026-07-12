@@ -1,31 +1,122 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tender Hunter AI</title>
+
+    <style>
+        body{
+            font-family:Arial,Helvetica,sans-serif;
+            background:#f4f6f9;
+            margin:0;
+            padding:20px;
+        }
+
+        .container{
+            max-width:1000px;
+            margin:auto;
+        }
+
+        h1{
+            color:#0d47a1;
+            text-align:center;
+        }
+
+        h2{
+            text-align:center;
+            color:#444;
+        }
+
+        .search-box{
+            text-align:center;
+            margin:25px 0;
+        }
+
+        input{
+            width:60%;
+            padding:12px;
+            border:1px solid #ccc;
+            border-radius:8px;
+            font-size:16px;
+        }
+
+        button{
+            padding:12px 20px;
+            border:none;
+            border-radius:8px;
+            background:#1565c0;
+            color:white;
+            font-size:16px;
+            cursor:pointer;
+        }
+
+        .card{
+            background:white;
+            border-radius:10px;
+            padding:15px;
+            margin-top:15px;
+            box-shadow:0 2px 6px rgba(0,0,0,.15);
+        }
+
+        .footer{
+            text-align:center;
+            margin-top:30px;
+            color:gray;
+        }
+    </style>
 </head>
-<body style="font-family:Arial;background:#f4f4f4;text-align:center;">
+
+<body>
+
+<div class="container">
 
 <h1>🚀 Tender Hunter AI</h1>
-<p>Find Government Tenders & Winners</p>
+<h2>Latest Government Tender Winners</h2>
 
+<div class="search-box">
 <form method="POST">
-    <input type="text" name="keyword" placeholder="Enter keyword" value="{{ keyword }}">
-    <button type="submit">🔍 Search</button>
+
+<input
+type="text"
+name="keyword"
+placeholder="Search Company / Product / Tender"
+value="{{ keyword }}">
+
+<button type="submit">
+Search
+</button>
+
 </form>
+</div>
 
 {% if results %}
-<hr>
-<h2>Search Results</h2>
 
 {% for item in results %}
-<div style="background:white;padding:15px;margin:15px;border-radius:10px;">
-    <b>{{ item.title }}</b><br><br>
-    Department: {{ item.department }}<br>
-    Winner: {{ item.winner }}
+
+<div class="card">
+
+<h3>{{ item.title }}</h3>
+
+<p><b>Department:</b> {{ item.department }}</p>
+
+<p><b>Winner:</b> {{ item.winner }}</p>
+
 </div>
+
 {% endfor %}
 
 {% endif %}
+
+<div class="footer">
+
+Tender Hunter AI<br>
+
+Government Tender Intelligence Platform
+
+</div>
+
+</div>
 
 </body>
 </html>
