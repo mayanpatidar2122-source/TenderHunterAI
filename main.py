@@ -10,39 +10,22 @@ def home():
     results = []
 
     if request.method == "POST":
-        keyword = request.form.get("keyword", "")
-results = []
+        keyword = request.form.get("keyword", "").strip()
 
-url = f"https://etenders.gov.in/eprocure/app?page=FrontEndTenderSearch&searchType=all&keyword={keyword}"
-
-try:
-    response = requests.get(
-        url,
-        headers={"User-Agent": "Mozilla/5.0"},
-        timeout=15
-    )
-
-    if response.status_code == 200:
-        results.append({
-            "title": "Connection successful",
-            "department": "Government Portal",
-            "winner": "Data fetch started"
-        })
-    else:
-        results.append({
-            "title": "Website responded with error",
-            "department": str(response.status_code),
-            "winner": "-"
-        })
-
-except Exception as e:
-    results.append({
-        "title": "Connection failed",
-        "department": "Error",
-        "winner": str(e)
-    })
-
-
+        # Demo data (baad me real CPPP data se replace karenge)
+        if keyword:
+            results = [
+                {
+                    "title": f"Tender for {keyword}",
+                    "department": "CPPP",
+                    "winner": "Demo Company Ltd"
+                },
+                {
+                    "title": f"Supply of {keyword}",
+                    "department": "Railways",
+                    "winner": "ABC Industries"
+                }
+            ]
 
     return render_template(
         "index.html",
