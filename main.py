@@ -16,6 +16,8 @@ def home():
     url = f"https://etenders.gov.in/eprocure/app?page=FrontEndAdvancedSearch&searchType=active&tenderTitle={keyword}"
 
     try:
+
+    try:
         response = requests.get(
             url,
             headers={
