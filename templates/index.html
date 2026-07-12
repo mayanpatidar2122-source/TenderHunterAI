@@ -15,7 +15,11 @@
          style="width:300px;padding:10px;">
   <button type="submit">🔍 Search</button>
 </form>
-
+{% if keyword %}
+<hr>
+<h3>Search Result</h3>
+<p>You searched for: <b>{{ keyword }}</b></p>
+{% endif %}
 <br><br>
 
 <div style="background:white;padding:20px;border-radius:10px;display:inline-block;">
