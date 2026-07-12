@@ -2,7 +2,13 @@ from flask import Flask, render_template, request
 import requests
 from bs4 import BeautifulSoup
 
-app = Flask(__name__)
+app = Flask(__name__)LISTED_COMPANIES = {}
+
+with open("listed_companies.csv", newline="", encoding="utf-8") as file:
+    reader = csv.DictReader(file)
+
+    for row in reader:
+        LISTED_COMPANIES[row["Company"].lower()] = row["Symbol"]
 
 @app.route("/", methods=["GET", "POST"])
 def home():
