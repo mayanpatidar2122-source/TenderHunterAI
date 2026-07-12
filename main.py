@@ -41,8 +41,8 @@ except Exception as e:
         "department": "Error",
         "winner": str(e)
     })
-            }
-        ]
+
+
 
     return render_template(
         "index.html",
